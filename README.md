@@ -19,13 +19,13 @@ py google.py
 ```
 Please note that you need to enable the Google Calendar API for this integration to work. Follow Google's documentation to enable the API and obtain your API credentials.
 
-Future Plans
+# Future Plans
 This project is designed to be easily extendable. The modular structure allows for future expansion and integration, such as creating a Flask web service to provide Google Calendar functionality over the web.
 
-Contributions
+# Contributions
 Contributions are welcome! If you have ideas to improve or expand this project, feel free to open an issue or submit a pull request.
 
-Disclaimer
+# Disclaimer
 This project is for educational and illustrative purposes only. Make sure to adhere to Google's API usage policies and best practices.
 
 
