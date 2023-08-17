@@ -8,12 +8,15 @@ Install the required dependencies by executing the following command in your ter
 
 bash
 Copy code
-```pip install google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client google-auth-oauthlib
-Run the google.py script:
+```bash
+pip install google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client google-auth-oauthlib
 ```
-bash
+Run the google.py script
 Copy code
-```py google.py```
+
+```bash
+py google.py
+```
 Please note that you need to enable the Google Calendar API for this integration to work. Follow Google's documentation to enable the API and obtain your API credentials.
 
 Future Plans
