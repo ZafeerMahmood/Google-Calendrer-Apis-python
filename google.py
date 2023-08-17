@@ -10,13 +10,14 @@ def main():
         end_datetime = '2023-05-28T17:00:00-07:00'
         recurrence = ['RRULE:FREQ=DAILY;COUNT=2']
         attendees = [{'email': 'lpage@example.com'}, {'email': 'sbrin@example.com'}]
+        colorId = 1
         reminders = {
             'useDefault': False,
             'overrides': [{'method': 'email', 'minutes': 24 * 60}, {'method': 'popup', 'minutes': 10}],
         }
         
         event_link = create_event(summary, location, description, start_datetime, end_datetime,
-                                  recurrence, attendees, reminders)
+                                  recurrence, attendees, reminders,colorId)
         print('Event created:', event_link)
 
     except HttpError as error:

@@ -23,7 +23,7 @@ def get_credentials():
     return creds
 
 def create_event(summary, location, description, start_datetime, end_datetime,
-                  recurrence=None, attendees=None, reminders=None):
+                  recurrence=None, attendees=None, reminders=None ,colorId=None):
     creds = get_credentials()
     service = build('calendar', 'v3', credentials=creds)
 
@@ -42,6 +42,7 @@ def create_event(summary, location, description, start_datetime, end_datetime,
         'recurrence': recurrence,
         'attendees': attendees,
         'reminders': reminders,
+        'colorId': colorId, 
     }
 
     created_event = service.events().insert(calendarId='primary', body=event).execute()
