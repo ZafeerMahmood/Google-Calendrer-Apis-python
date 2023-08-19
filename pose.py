@@ -4,13 +4,13 @@ more than 10 seconds(changeable)."""
 import cv2
 import mediapipe as mp
 from imutils.video import VideoStream
-from google_calendar import create_event,get_credentials  # Import your Google Calendar event creation function
+from google_calendar import create_event,get_credentials
 from googleapiclient.errors import HttpError
 from datetime import datetime, timedelta
 
 
 class PoseDetector:
-    # ... (your existing init and start_stream methods) ...
+
     def __init__(self, url):
         self.url = url
         self.vs = None
