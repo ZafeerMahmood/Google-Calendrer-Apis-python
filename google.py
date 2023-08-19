@@ -1,3 +1,7 @@
+"""
+simple script to add an event to google calender
+"""
+
 from google_calendar import create_event
 from googleapiclient.errors import HttpError
 
