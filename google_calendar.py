@@ -1,3 +1,7 @@
+"""
+function used to login in with google to access google calendar
+and to create an event in the calendar
+"""
 import os.path
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials

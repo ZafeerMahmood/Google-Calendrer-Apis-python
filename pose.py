@@ -1,17 +1,27 @@
+"""pose estimation module
+This module is used to detect a pose and create a Google Calendar event if the user is detected to be sitting for
+more than 10 seconds(changeable)."""
 import cv2
 import mediapipe as mp
 from imutils.video import VideoStream
+from google_calendar import create_event,get_credentials  # Import your Google Calendar event creation function
+from googleapiclient.errors import HttpError
+from datetime import datetime, timedelta
+
 
 class PoseDetector:
+    # ... (your existing init and start_stream methods) ...
     def __init__(self, url):
         self.url = url
         self.vs = None
+        self.secs=10 # change this to change the time threshold eg 300 for 5 minutes
         self.mp_drawing = mp.solutions.drawing_utils
         self.mp_pose = mp.solutions.pose
 
-    def start_stream(self):
-        self.vs = VideoStream(src=self.url).start()
-
+    def detect_pose(self):
+        last_detection_time = None
+        pose_detected = False
+        
         with self.mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
             while True:
                 frame = self.vs.read()
@@ -34,6 +44,24 @@ class PoseDetector:
 
                 cv2.imshow('Mediapipe Feed', image)
 
+                # Check if a pose is detected
+                if any(landmark.visibility > 0.5 for landmark in results.pose_landmarks.landmark):
+                    pose_detected = True
+                    if last_detection_time is None:
+                        last_detection_time = datetime.now()
+                else:
+                    pose_detected = False
+                    if last_detection_time is not None:
+                        time_difference = datetime.now() - last_detection_time
+                        if time_difference.total_seconds() >= self.secs:  # Adjust the time threshold as needed
+                            try:
+                                create_event("Work Time", "Home", "Work session", last_detection_time.isoformat(),
+                                             (last_detection_time + timedelta(seconds=10)).isoformat(),
+                                             [], [], {'useDefault': False, 'overrides': [{'method': 'popup', 'minutes': 10}]})
+                            except HttpError as error:
+                                print('An error occurred:', error)
+                            last_detection_time = None
+
                 if cv2.waitKey(10) & 0xFF == ord('q'):
                     break
 
@@ -41,8 +69,8 @@ class PoseDetector:
         self.vs.stop()
 
 # Example usage
-
 if __name__ == '__main__':
     url = 'b.mp4'
+    get_credentials()
     pose_detector = PoseDetector(url)
-    pose_detector.start_stream()
+    pose_detector.detect_pose()
